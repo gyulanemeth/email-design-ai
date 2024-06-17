@@ -1,0 +1,22 @@
+{
+  "name": "email-design-ai",
+  "version": "0.0.0",
+  "description": "Generate email design with AI.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gyulanemeth/email-design-ai.git"
+  },
+  "author": "Gyula Németh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gyulanemeth/email-design-ai/issues"
+  },
+  "homepage": "https://github.com/gyulanemeth/email-design-ai#readme",
+  "devDependencies": {
+    "standard": "^17.1.0"
+  }
+}

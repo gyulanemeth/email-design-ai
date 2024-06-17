@@ -1,0 +1,95 @@
+<html>
+  <body>
+    <div id="thumbnail" style="margin: 20px auto;"></div>
+    <script src='https://cdn.chamaileon.io/sdk/1.1.3/umd/plugins.js'></script>
+    <script src="exampleJson.js"></script>
+    <script>
+      async function fetchAccessToken({ apiKey }) {
+        const accessTokenRequest = await fetch('https://sdk-api.chamaileon.io/api/v2/tokens/generate', {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${apiKey}`,
+          },
+        })
+
+        if (!accessTokenRequest.ok) {
+          throw new Error("Auth error")
+        }
+
+        const accessTokenResponse = await accessTokenRequest.json()
+        const accessToken = accessTokenResponse.result
+
+        return accessToken
+      }
+
+      async function getAccessToken({ apiKey }) {
+        return fetchAccessToken({ apiKey })
+      }
+
+      async function initChamaileonSdk() {
+        try {
+          const apiKey = localStorage.getItem('chApiKey')
+          const accessToken = await getAccessToken({ apiKey })
+
+          const whitelabelConfig = {
+            locale: 'en',
+            colors: {
+              'primary': '#aaaaff',
+              'secondary': '#009f4a',
+              'red': '#ff5546',
+              'darkBlue': '#2d3291',
+              'darkGreen': '#00af6e',
+              'lightGreen': '#50d791',
+              'weirdGreen': '#50d791',
+              'pink': '#ff91a0',
+              'yellow': '#ffd23c',
+            }
+          }
+
+          const chamaileonPlugins = await window.chamaileonSdk({
+            ...whitelabelConfig,
+            accessToken,
+            getAccessToken: () => getAccessToken({ apiKey })
+          })
+
+          return chamaileonPlugins
+        } catch(e) {
+          alert('Authentication problem. Please check out your API key settings.')
+        }
+      }
+
+      (async function() {
+        const chamaileonPlugins = await initChamaileonSdk()
+
+        const thumbnail = document.getElementById('thumbnail')
+        thumbnail.style.display = 'block'
+
+        thumbnail.innerHTML = ''
+
+        const gptGeneratedParams = {
+    "top": 10,
+    "right": 20,
+    "bottom": 10,
+    "left": 20
+  }
+
+        const documentJson = exampleJson(gptGeneratedParams)
+
+        chamaileonPlugins.createInlinePlugin({
+          plugin: 'thumbnail',
+          data: { document: documentJson },
+          settings: {
+            scroll: true
+          }
+        }, {
+          container: thumbnail,
+          dimensions: {
+            width: 800,
+            height: 1400,
+            scale: 1,
+          }
+        })
+      }())
+    </script>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Button Schema",
+  "type": "object",
+  "properties": {
+    "padding": {
+      "type": "object",
+      "properties": {
+        "top": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "right": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "bottom": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "left": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": ["top", "right", "bottom", "left"],
+      "additionalProperties": false
+    }
+  },
+  "required": ["padding"],
+  "additionalProperties": false
+}
