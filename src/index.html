@@ -1,81 +1,57 @@
 <html>
+  <head>
+    <style>
+      #left {
+        width: 50%;
+        float: left;
+      }
+      #right {
+        width: 50%;
+        float: right;
+      }
+      #thumbnail {
+        width: 800px;
+        height: 1400px;
+        border: 1px solid #000;
+        margin: 20px auto;
+        display: none;
+      }
+      #loading {
+        display: none;
+      }
+    </style>
+  </head>
   <body>
-    <div id="thumbnail" style="margin: 20px auto;"></div>
+    <div id="left">
+      <p>
+        What should I do?
+      </p>
+      <div>
+        <textarea id="prompt"></textarea>
+      </div>
+      <button id="execute-prompt">Do it already!</button>
+      <div id="loading">loading...</div>
+    </div>
+    <div id="right">
+      <div id="thumbnail" style="margin: 20px auto;"></div>
+    </div>
     <script src='https://cdn.chamaileon.io/sdk/1.1.3/umd/plugins.js'></script>
-    <script src="exampleJson.js"></script>
     <script>
-      async function fetchAccessToken({ apiKey }) {
-        const accessTokenRequest = await fetch('https://sdk-api.chamaileon.io/api/v2/tokens/generate', {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${apiKey}`,
-          },
-        })
-
-        if (!accessTokenRequest.ok) {
-          throw new Error("Auth error")
-        }
-
-        const accessTokenResponse = await accessTokenRequest.json()
-        const accessToken = accessTokenResponse.result
-
-        return accessToken
-      }
-
-      async function getAccessToken({ apiKey }) {
-        return fetchAccessToken({ apiKey })
-      }
-
-      async function initChamaileonSdk() {
-        try {
-          const apiKey = localStorage.getItem('chApiKey')
-          const accessToken = await getAccessToken({ apiKey })
-
-          const whitelabelConfig = {
-            locale: 'en',
-            colors: {
-              'primary': '#aaaaff',
-              'secondary': '#009f4a',
-              'red': '#ff5546',
-              'darkBlue': '#2d3291',
-              'darkGreen': '#00af6e',
-              'lightGreen': '#50d791',
-              'weirdGreen': '#50d791',
-              'pink': '#ff91a0',
-              'yellow': '#ffd23c',
-            }
-          }
-
-          const chamaileonPlugins = await window.chamaileonSdk({
-            ...whitelabelConfig,
-            accessToken,
-            getAccessToken: () => getAccessToken({ apiKey })
-          })
-
-          return chamaileonPlugins
-        } catch(e) {
-          alert('Authentication problem. Please check out your API key settings.')
-        }
-      }
-
       (async function() {
-        const chamaileonPlugins = await initChamaileonSdk()
+        const initChamaileonSdk = await import('./initChamaileonSdk.js')
+        const exampleJson = await import('./exampleJson.js')
+        const emailDesignAssistant = await import('./assistant.js')
+        const chamaileonPlugins = await initChamaileonSdk.default()
 
         const thumbnail = document.getElementById('thumbnail')
         thumbnail.style.display = 'block'
 
         thumbnail.innerHTML = ''
+        
+        let currentParams = { top: 10, right: 20, bottom: 10, left: 20}
+        const documentJson = exampleJson.default(currentParams)
 
-        const gptGeneratedParams = {
-    "top": 10,
-    "right": 20,
-    "bottom": 10,
-    "left": 20
-  }
-
-        const documentJson = exampleJson(gptGeneratedParams)
-
-        chamaileonPlugins.createInlinePlugin({
+        const thumbnailPlugin = await chamaileonPlugins.createInlinePlugin({
           plugin: 'thumbnail',
           data: { document: documentJson },
           settings: {
@@ -88,6 +64,21 @@
             height: 1400,
             scale: 1,
           }
+        })
+
+        document.getElementById('execute-prompt').addEventListener('click', async () => {
+          document.getElementById('loading').style.display = 'block'
+          document.getElementById('execute-prompt').style.display = 'none'
+          const prompt = document.getElementById('prompt').value
+
+          const response = await emailDesignAssistant.default(currentParams, prompt)
+
+          const newParams = JSON.parse(response)
+          currentParams = newParams.padding
+          const newDocumentJson = exampleJson.default(currentParams)
+          await thumbnailPlugin.methods.updateData({ document: newDocumentJson })
+          document.getElementById('loading').style.display = 'none'
+          document.getElementById('execute-prompt').style.display = 'block'
         })
       }())
     </script>
