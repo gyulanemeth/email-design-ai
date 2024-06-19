@@ -1,37 +1,3 @@
-const buttonSchema = {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "Button Schema",
-  "type": "object",
-  "properties": {
-    "padding": {
-      "type": "object",
-      "properties": {
-        "top": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "right": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "bottom": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "left": {
-          "type": "integer",
-          "minimum": 0
-        }
-      },
-      "required": ["top", "right", "bottom", "left"],
-      "additionalProperties": false
-    }
-  },
-  "required": ["padding"],
-  "additionalProperties": false
-}
-
-
 const openAiApiKey = localStorage.getItem('openAiApiKey')
 
 async function sendRequestToCompletionsApi(messages) {
@@ -47,10 +13,12 @@ async function sendRequestToCompletionsApi(messages) {
   return response.json()
 }
 
-export default async function emailDesignAssistant(currentValues, instruction) {
+export default async function generateButton(currentButton, instruction) {
+  const buttonSchema = await import('./buttonSchema.js')
   const message = `The following json schema describes the properties of a button:
 ${JSON.stringify(buttonSchema, null, 2)}
-The current values are: { top: ${currentValues.top}, right: ${currentValues.right}, bottom: ${currentValues.bottom}, left: ${currentValues.left} }
+The current values are:
+${JSON.stringify(currentButton, null, 2)}
 Just generate a json response, nothing else, not even a markdown wrapper around it. If the instruction does not make sense, just use the current values.
 Instruction: ${instruction}`
   
