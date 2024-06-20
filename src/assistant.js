@@ -13,12 +13,16 @@ async function sendRequestToCompletionsApi(messages) {
   return response.json()
 }
 
-export default async function generateButton(currentButton, instruction) {
+export default async (currentDoc, instruction) => {
   const buttonSchema = await import('./buttonSchema.js')
+  const multicolSchema = await import('./multicolSchema.js')
   const message = `The following json schema describes the properties of a button:
 ${JSON.stringify(buttonSchema, null, 2)}
-The current values are:
-${JSON.stringify(currentButton, null, 2)}
+The following json schema describes the properties of a multicol:
+${JSON.stringify(multicolSchema, null, 2)}
+
+The current document:
+${JSON.stringify(currentDoc, null, 2)}
 Just generate a json response, nothing else, not even a markdown wrapper around it. If the instruction does not make sense, just use the current values.
 Instruction: ${instruction}`
   

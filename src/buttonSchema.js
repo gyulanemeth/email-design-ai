@@ -2,6 +2,10 @@ export default {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object",
   "properties": {
+      "type": {
+        "type": "string",
+        "enum": ["button"]
+      },
       "attrs": {
           "type": "object",
           "properties": {
