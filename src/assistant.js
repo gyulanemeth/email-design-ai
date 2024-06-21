@@ -14,11 +14,21 @@ async function sendRequestToCompletionsApi(messages) {
 }
 
 export default async (currentDoc, instruction) => {
-  const buttonSchema = await import('./buttonSchema.js')
-  const multicolSchema = await import('./multicolSchema.js')
-  const message = `The following json schema describes the properties of a button:
+  const textSchema = await import('./schemas/text.js')
+  const imageSchema = await import('./schemas/image.js')
+  const buttonSchema = await import('./schemas/button.js')
+  const boxSchema = await import('./schemas/box.js')
+  const multicolSchema = await import('./schemas/multicolumn.js')
+
+  const message = `JSON schema of a text:
+${JSON.stringify(textSchema, null, 2)}
+JSON schema of an image:
+${JSON.stringify(imageSchema, null, 2)}
+JSON schema of a button:
 ${JSON.stringify(buttonSchema, null, 2)}
-The following json schema describes the properties of a multicol:
+JSON schema of a box:
+${JSON.stringify(boxSchema, null, 2)}
+JSON schema of a multicolumn:
 ${JSON.stringify(multicolSchema, null, 2)}
 
 The current document:
