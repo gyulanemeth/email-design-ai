@@ -39,51 +39,15 @@
     <script>
       (async function() {
         const initChamaileonSdk = await import('./initChamaileonSdk.js')
-        const exampleJson = await import('./exampleJson.js')
+        const defaultDocument = await import('./defaultDocument.js')
         const emailDesignAssistant = await import('./assistant.js')
         const chamaileonPlugins = await initChamaileonSdk.default()
 
+        let documentJson = defaultDocument.default
+
         const thumbnail = document.getElementById('thumbnail')
         thumbnail.style.display = 'block'
-
         thumbnail.innerHTML = ''
-        
-        let currentParams = {
-            "type": "button",
-            "attrs": {
-                "sizeType": "FIT_TO_TEXT",
-                "href": "",
-                "text": "<p>BUY ME</p>\n",
-                "fullWidthOnMobile": false,
-                "align": "center"
-            },
-            "style": {
-                "line-height": "24px",
-                "color": "#ffffff",
-                "font-size": "17px",
-                "font-family": "Arial, Helvetica Neue, Helvetica, sans-serif",
-                "background-color": "#FF6347",
-                "background-position": "center center",
-                "background-repeat": "no-repeat",
-                "background-image": "url()",
-                "border-radius": "5px",
-                "border-left": "0px solid #000000",
-                "border-bottom": "0px solid #000000",
-                "border-right": "0px solid #000000",
-                "border-top": "0px solid #000000",
-                "margin-left": "10px",
-                "margin-bottom": "20px",
-                "margin-right": "10px",
-                "margin-top": "20px",
-                "padding-left": "20px",
-                "padding-bottom": "10px",
-                "padding-right": "20px",
-                "padding-top": "10px",
-                "letter-spacing": "normal"
-            }
-        }
-
-        const documentJson = exampleJson.default(currentParams)
 
         const thumbnailPlugin = await chamaileonPlugins.createInlinePlugin({
           plugin: 'thumbnail',
@@ -106,12 +70,11 @@
           document.getElementById('prompt').style.display = 'none'
           const prompt = document.getElementById('prompt').value
 
-          const response = await emailDesignAssistant.default(currentParams, prompt)
+          const response = await emailDesignAssistant.default(documentJson, prompt)
 
-          const newParams = JSON.parse(response)
-          currentParams = newParams
-          const newDocumentJson = exampleJson.default(currentParams)
-          await thumbnailPlugin.methods.updateData({ document: newDocumentJson })
+          documentJson = JSON.parse(response)
+
+          await thumbnailPlugin.methods.updateData({ document: documentJson })
           document.getElementById('loading').style.display = 'none'
           document.getElementById('execute-prompt').style.display = 'block'
           document.getElementById('prompt').value = ''

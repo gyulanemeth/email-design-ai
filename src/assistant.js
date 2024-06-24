@@ -19,6 +19,8 @@ export default async (currentDoc, instruction) => {
   const buttonSchema = await import('./schemas/button.js')
   const boxSchema = await import('./schemas/box.js')
   const multicolSchema = await import('./schemas/multicolumn.js')
+  const fullwidthSchema = await import('./schemas/fullwidth.js')
+  const bodySchema = await import('./schemas/body.js')
 
   const message = `JSON schema of a text:
 ${JSON.stringify(textSchema, null, 2)}
@@ -30,6 +32,14 @@ JSON schema of a box:
 ${JSON.stringify(boxSchema, null, 2)}
 JSON schema of a multicolumn:
 ${JSON.stringify(multicolSchema, null, 2)}
+JSON schema of a fullwidth container:
+${JSON.stringify(fullwidthSchema, null, 2)}
+JSON schema of a body:
+${JSON.stringify(bodySchema, null, 2)}
+
+The body can only have fullwidth children. Fullwidths can only be in the body.
+Logically separate sections should be in separate fullwidths.
+
 
 The current document:
 ${JSON.stringify(currentDoc, null, 2)}
