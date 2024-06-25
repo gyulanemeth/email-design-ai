@@ -1,4 +1,11 @@
 export default {
+  "variables": [
+    {
+      name: "color-primary",
+      type: "color",
+      value: "#abcdef"
+    }
+  ],
   "body":{
      "eid":"root",
      "type":"body",
@@ -83,7 +90,10 @@ export default {
               "background-image":"url()",
               "body-width":600,
               "content-width":600,
-              "content-background-color":"#5C9AEB",
+              "content-background-color": {
+                reference: "color-primary",
+                default: "#abcdef"
+              },
               "content-background-repeat":"no-repeat",
               "content-background-position":"center center",
               "content-background-image":"url()",
