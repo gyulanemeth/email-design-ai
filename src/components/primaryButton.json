@@ -1,0 +1,23 @@
+{
+  "type": "button",
+  "name": "button-primary",
+  "props": {
+    "bgColor": "color-primary",
+    "text": "Primary Button"
+  },
+  "template": [
+    {
+      "type": "button",
+      "attrs": {
+        "text": {
+          "reference": "props.text"
+        }
+      },
+      "style": {
+        "background-color": {
+          "reference": "props.bgColor"
+        }
+      }
+    }
+  ]
+}
