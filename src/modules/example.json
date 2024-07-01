@@ -1,10 +1,206 @@
 {
-  "body": {
-    "header": {
-
+  "theme": {
+    "colors": {
+      "primary": "#FF0000",
+      "secondary": "#FFFFFF",
+      "text": "#000000",
+      "background": "#FFFFFF"
     },
-    "main": [],
+    "fonts": {
+      "primary": "Arial, sans-serif",
+      "secondary": "Georgia, serif"
+    },
+    "images": {
+      "logo": {
+        "url": "https://www.ikea.com/ms/img/header/ikea-logo.png",
+        "alt": "Ikea Logo"
+      },
+      "social": {
+        "facebook": {
+          "url": "https://www.facebook.com/IKEAUSA",
+          "icon": "facebook"
+        },
+        "twitter": {
+          "url": "https://twitter.com/IKEAUSA",
+          "icon": "twitter"
+        },
+        "instagram": {
+          "url": "https://www.instagram.com/ikeausa/",
+          "icon": "instagram"
+        }
+      }
+    },
+    "spacing": {
+      "between-blocks": "20px",
+      "between-elements": "10px",
+      "block-padding": "20px"
+    }
+  },
+  "components": {
+    "buttons": {
+      "button-primary": {
+        "background": "#FF0000",
+        "color": "#FFFFFF",
+        "border": "1px solid #FF0000",
+        "border-radius": "5px",
+        "padding": "10px 20px",
+        "font-size": "16px",
+        "font-weight": "bold",
+        "text-transform": "uppercase"
+      },
+      "button-secondary": {
+        "background": "#FFFFFF",
+        "color": "#FF0000",
+        "border": "1px solid #FF0000",
+        "border-radius": "5px",
+        "padding": "10px 20px",
+        "font-size": "16px",
+        "font-weight": "bold",
+        "text-transform": "uppercase"
+      }
+    },
+    "text": {
+      "body": {
+        "h1": {
+          "font-size": "32px",
+          "font-weight": "bold",
+          "line-height": "1.5"
+        },
+        "h2": {
+          "font-size": "24px",
+          "font-weight": "bold",
+          "line-height": "1.5"
+        },
+        "h3": {
+          "font-size": "20px",
+          "font-weight": "bold",
+          "line-height": "1.5"
+        },
+        "p": {
+          "font-size": "16px",
+          "font-weight": "normal",
+          "line-height": "1.5"
+        },
+        "a": {
+          "color": "#FF0000",
+          "text-decoration": "none"
+        }
+      },
+      "footer": {
+        "h2": {
+          "font-size": "18px",
+          "font-weight": "bold",
+          "line-height": "1.5"
+        },
+        "p": {
+          "font-size": "14px",
+          "font-weight": "normal",
+          "line-height": "1.5"
+        },
+        "a": {
+          "color": "#FF0000",
+          "text-decoration": "none"
+        }
+      }
+    }
+  },
+  "content": {
+    "header": {
+      "module": "header-centered",
+      "data": {
+        "logo": {
+          "url": "https://www.ikea.com/ms/img/header/ikea-logo.png",
+          "alt": "Ikea Logo"
+        },
+        "websiteUrl": "http://www.ikea.com/us/en/"
+      }
+    },
+    "hero": {
+      "module": "hero",
+      "data": {
+        "title": "Welcome to Ikea",
+        "subtitle": "The wonderful world of Ikea",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam auctor, nunc nec",
+        "cta": {
+          "text": "Shop Now",
+          "url": "http://www.ikea.com/us/en/"
+        },
+        "image": {
+          "url": "https://www.ikea.com/ms/img/header/ikea-logo.png",
+          "alt": "Ikea Logo"
+        }
+      }
+    },
+    "products": {
+      "module": "products",
+      "data": {
+        "title": "Our Products",
+        "subtitle": "The best products in the world",
+        "products": [
+          {
+            "name": "Billy Bookcase",
+            "price": "$59.99",
+            "image": {
+              "url": "https://www.ikea.com/us/en/images/products/billy-bookcase-white__0636211_PE697416_S4.JPG",
+              "alt": "Billy Bookcase"
+            }
+          },
+          {
+            "name": "Kallax Shelf",
+            "price": "$69.99",
+            "image": {
+              "url": "https://www.ikea.com/us/en/images/products/kallax-shelf-unit-white__0636211_PE697416_S4.JPG",
+              "alt": "Kallax Shelf"
+            }
+          },
+          {
+            "name": "Malm Dresser",
+            "price": "$129.99",
+            "image": {
+              "url": "https://www.ikea.com/us/en/images/products/malm-chest-of-6-drawers-white__0636211_PE697416_S4.JPG",
+              "alt": "Malm Dresser"
+            }
+          }
+        ]
+      }
+    },
     "footer": {
+      "module": "footer",
+      "data": {
+        "logo": {
+          "url": "https://www.ikea.com/ms/img/header/ikea-logo.png",
+          "alt": "Ikea Logo"
+        },
+        "websiteUrl": "http://www.ikea.com/us/en/",
+        "social": {
+          "facebook": {
+            "url": "https://www.facebook.com/IKEAUSA",
+            "icon": "facebook"
+          },
+          "twitter": {
+            "url": "https://twitter.com/IKEAUSA",
+            "icon": "twitter"
+          },
+          "instagram": {
+            "url": "https://www.instagram.com/ikeausa/",
+            "icon": "instagram"
+          }
+        },
+        "links": {
+          "about": {
+            "url": "http://www.ikea.com/us/en/about_ikea/index.html",
+            "text": "About Ikea"
+          },
+          "contact": {
+            "url": "http://www.ikea.com/us/en/customer-service/contact-us/index.html",
+            "text": "Contact Us"
+          },
+          "careers": {
+            "url": "http://www.ikea.com/us/en/about_ikea/jobs_at_ikea/index.html",
+            "text": "Careers"
+          }
+        }
+      }
     }
   }
 }
